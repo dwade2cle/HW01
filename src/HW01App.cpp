@@ -42,6 +42,7 @@ private:
 	static const int appWidth = 800;
 	static const int appHeight = 600;
 	static const int surfaceSize = 1024;
+	
 	/**
 	Draws a rectangle with a border between (x1,y1) and (x2,y2) the logic assumes that the 
 	rectangle is declared within the bounds of the window
@@ -75,9 +76,21 @@ void HW01App::prepareSettings(Settings* settings)	{
 	(*settings).setWindowSize(appWidth, appHeight);
 	(*settings).setResizable(false);
 }
-
+/*
+Even though logic assumes that the rectangle is in the window, or even just on the surface somewhere you should still error check just in case, what is you type something in wrong for example.
+also maybe specificy what corners x1, y1, x2, and y2 are, it might be simpler to replace x2 and y2 with width and height in any case.
+By the way the current setup will still draw the mouse controlled rectangle, but you may need to move it up a little to see it, it doesn't have the code to stop the rectangle at the edge
+*/
 void HW01App::rectangle(uint8_t* pixels, int x1, int y1, int x2, int y2, Color8u fillColor, Color8u borderColor)	{
-	
+	if(x1>appWidth || x1<0 || x2>appWidth || x2<0)
+	{
+		return;
+	}
+	if(y1>appHeight || y1<0 || y2>appHeight || y2<0)
+	{
+		return;
+	}
+	//speaking from experiance it is a huge time saver to just put this in and avoid causing yourself a headache later
 	for (int y = y1; y < y2; y++)	{
 		for (int x = x1; x < x2; x++)	{
 			
@@ -96,8 +109,13 @@ void HW01App::rectangle(uint8_t* pixels, int x1, int y1, int x2, int y2, Color8u
 		}
 	}
 }
-
+// again, error checking is a must, especially since you don't want the ball to be off screen
+// the radius could cause the ball/circle to be partially off screen.
 void HW01App::circle(uint8_t* surface, int centerX, int centerY, int radius, Color8u fillColor)	{
+	if(centerX-radius<0 || centerX+radius>appWidth || centerY-radius<0|| centerY+radius>appHeight)
+	{
+		return; // simple enough and can prevent a headache in the future.
+	}
 	// Square around circle
 	for (int j = centerY - radius; j < (centerY + radius); j++)	{
 		for (int i = centerX - radius; i < (centerX + radius); i++)	{
@@ -113,7 +131,7 @@ void HW01App::circle(uint8_t* surface, int centerX, int centerY, int radius, Col
 	}
 }
 void HW01App::blur(uint8_t* surface)	{
-	static uint8_t buffer[3*surfaceSize*surfaceSize];
+	static uint8_t buffer[3*surfaceSize*surfaceSize]; // you usually don't see static variables here, however trying to move it caused an error, in the future you may wish to avoid this
 	memcpy(buffer, surface, 3*surfaceSize*surfaceSize);
 
 	// Kernel
@@ -171,9 +189,37 @@ void HW01App::gradientFill(uint8_t* surface, Color8u color1, Color8u color2)	{
 		cNewBlue = 0;
 	}
 }
-
+//again error check and what are the points? are x1 and y1 the left point or the right point and does it matter? here it does because it can give you negative numbers that you don't want
+// if the values are put in incorrectly
 void HW01App::line(uint8_t* surface, int x1, int y1, int x2, int y2, Color8u color)	{
-	double ratioXY = (double) std::abs(x1 - x2)/std::abs(y1 - y2);
+	if(x1<0 || x2<0 || x1>appWidth || x2>appWidth || y1<0 || y2<0 || y1>appHeight || y2>appHeight)
+	{
+		return;
+	}
+	double ratioXY;
+	if(x1>x2)
+	{
+		if(y1>y2)
+		{
+			ratioXY = (double) std::abs(x1 - x2)/std::abs(y1 - y2);
+		}
+		else //if(y2>y1)
+		{
+			ratioXY = (double) std::abs(x1 - x2)/std::abs(y2 - y1);
+		}
+	}
+	else //if(x2>x1)
+	{
+		if(y1>y2)
+		{
+			ratioXY = (double) std::abs(x2 - x1)/std::abs(y1 - y2);
+		}
+		else //if(y2>y1)
+		{
+			ratioXY = (double) std::abs(x2 - x1)/std::abs(y2 - y1); // if I understand what you are doing here this should account for the points being either left or right of each other
+		}
+	}
+	//double ratioXY = (double) std::abs(x1 - x2)/std::abs(y1 - y2);
 	double yUsed = y1 + 0.0; double xUsed = x1 + 0.0;
 	//Logic if x1 and x2 are further apart than y1 and y2
 	if (ratioXY >= 1)	{

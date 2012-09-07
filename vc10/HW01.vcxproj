@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -47,7 +47,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\include;..\..\..\..\..\..\Cinder\cinder_0.8.4_vc2010\include;..\..\..\..\..\..\Cinder\cinder_0.8.4_vc2010\boost</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;C:\Users\Jake McCanty\Desktop\Cinder\cinder_0.8.4_vc2010\cinder_0.8.4_vc2010\include;..\..\..\..\..\..\Cinder\cinder_0.8.4_vc2010\include;C:\Users\Jake McCanty\Desktop\Cinder\cinder_0.8.4_vc2010\cinder_0.8.4_vc2010\boost;..\..\..\..\..\..\Cinder\cinder_0.8.4_vc2010\boost</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -58,11 +58,11 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
-      <AdditionalIncludeDirectories>..\..\..\..\..\..\Cinder\cinder_0.8.4_vc2010\include;..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Jake McCanty\Desktop\Cinder\cinder_0.8.4_vc2010\cinder_0.8.4_vc2010\include;..\..\..\..\..\..\Cinder\cinder_0.8.4_vc2010\include;..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>cinder_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\..\..\Cinder\cinder_0.8.4_vc2010\lib;..\..\..\..\..\..\Cinder\cinder_0.8.4_vc2010\lib\msw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Jake McCanty\Desktop\Cinder\cinder_0.8.4_vc2010\cinder_0.8.4_vc2010\lib;..\..\..\..\..\..\Cinder\cinder_0.8.4_vc2010\lib;C:\Users\Jake McCanty\Desktop\Cinder\cinder_0.8.4_vc2010\cinder_0.8.4_vc2010\lib\msw;..\..\..\..\..\..\Cinder\cinder_0.8.4_vc2010\lib\msw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -111,7 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources.rc" />
-  </ItemGroup>  
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
